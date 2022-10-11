@@ -1,25 +1,38 @@
-import React from 'react';
-
+import React, {useState} from 'react';
 import s from './App.module.css';
+import Counter from "./components/Counter";
+import Setting from './components/Setting';
 
-function App() {
-    const Yahoo = () => {
-        console.log('Yahoooooo!')
-    };
+export type AppPropsType = {
+    startValue: number
+    maxValue: number
+}
+
+const App = (props: AppPropsType) => {
+    let [count, setCount] = useState<number>(props.startValue)
+
+    const Inc = () => {
+        if (count < props.maxValue) {
+            setCount(count + 1)
+        }
+    }
+    const Reset = () => {
+        setCount(props.startValue)
+    }
+
+
 
     return (
         <div className={s.App}>
-            <div className={s.counter}>
-                <div className={s.monitor}>0</div>
-                <div  className={s.buttons}>
-                    <div>
-                        <button>inc</button>
-                    </div>
-                    <div>
-                        <button onClick={Yahoo}>reset</button>
-                    </div>
-                </div>
-            </div>
+            <Counter
+                Inc={Inc}
+                Reset={Reset}
+                maxValue={props.maxValue}
+                startValue={props.startValue}
+                value={count}/>
+            <Setting
+                Set={Set}
+            />
         </div>
     );
 }
